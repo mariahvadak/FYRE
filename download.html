@@ -1,0 +1,13 @@
+{% extends "flux/base.html" %}
+
+{% block content %}
+    <h2 class="legend title">Site Data</h2>
+            
+    <div class="my-2">
+        <strong style="font-size:large">Click the "Download CSV" button below to retrieve data of flux tower site. </strong>
+    </div>
+    <div>
+        <button class="btn btn-success mb-2" onclick="excel_download()"><i class="icon-plus-sign "></i>Download CSV</button>
+    </div>
+
+{% endblock %}

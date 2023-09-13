@@ -1,0 +1,27 @@
+{% extends "flux/base.html" %}
+
+{% block content %}
+<h2 class="legend title">Site "..."</h2> <br>
+
+<style>
+    .btn {
+      display: inline-block;
+    }
+    .btn + .btn {
+      margin-left: 20px; 
+    }
+</style>
+
+<div class="my-2 text-center">
+    <strong style="font-size:large">Click the "Upload CSV" button to upload data of tower site OR "Download CSV" button below to retrieve data of tower site. </strong>
+</div>
+
+<br>
+
+<div class="text-center">
+    <a href="/flux/upload/" class="btn btn-success mb-2"><i class="icon-plus-sign"></i>Upload CSV</a>
+
+    <a href="/flux/download/" class="btn btn-success mb-2"><i class="icon-plus-sign"></i>Download CSV</a>
+</div>
+
+{% endblock %}

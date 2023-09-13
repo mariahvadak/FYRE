@@ -1,0 +1,115 @@
+{% extends "flux/base.html" %}
+
+{% load i18n %}
+{% block title %}{% trans "CEOM Flux Tower Sites Map" %} {% endblock %}
+
+{% block head_extra %}
+{{block.super|safe}}
+        
+    <!-- required plugins -->
+
+    <style type="text/css">
+        #map {
+           height: 768px;
+        }
+    </style>
+    
+    <script src="/static/maps/markerclusterer.js" type="text/javascript" ></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBo98LuzUr-aVpxRZPFHkBl2m4ogHeROGQ&callback=initMap"></script>
+
+{% endblock %}
+
+{% block content_with_span10 %}
+    <div id='content'>
+        <h2 class="legend" style="color: #0f4ba4;">{% trans "Carbon Flux Tower Sites" %}</h2>
+        <div class='row-fluid'>
+
+            <div id="map"></div>
+        </div>
+        
+        <div class='row-fluid'>
+            <br/>
+            <div name="gallery" id="gallery"></div>
+            <div id="debug"></div>
+        </div>
+
+
+    <script>
+        
+        function initMap() 
+        {
+            var startLocation = {lat: 0, lng: 0};
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 2,
+                center: startLocation,
+                gestureHandling: 'cooperative',
+                mapTypeId: 'satellite',
+                draggableCursor: 'crosshair',
+            });
+            const infoWindow = new google.maps.InfoWindow({
+                content: "",
+                disableAutoPan: true,
+            });
+            const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const markers = locations.map((position, i) => {
+                const label = labels[i % labels.length];
+                const marker = new google.maps.Marker({
+                    position,
+                    label,
+                });
+            // const markers = JSON.parse('{{ data.marker|safe }}').map((site, i) => {
+            //     const label = labels[i % labels.length];
+            //     const marker = new google.maps.Marker({
+            //     position: { lat: site.lat, lng: site.lng },
+            //     label,
+            //     });
+            //     marker.addListener("click", () => {
+            //     infoWindow.setContent(site.name);
+            //     infoWindow.open(map, marker);
+            //     });
+            //     return marker;
+            // });
+
+                marker.addListener("click", () => {
+                    infoWindow.setContent(label);
+                    infoWindow.open(map, marker);
+                });
+                return marker;
+            });
+
+            const markerCluster = new markerClusterer.MarkerClusterer({ map, markers });
+        }
+
+        const locations = [
+            { lat: 31.56391, lng: 47.154312 },
+            { lat: 33.718234, lng: 50.363181 },
+            { lat: 33.727111, lng: 50.371124 },
+            { lat: 33.848588, lng: 51.209834 },
+            { lat: -33.851702, lng: 151.216968 },
+            { lat: -34.671264, lng: 150.863657 },
+            { lat: -35.304724, lng: 148.662905 },
+            { lat: -36.817685, lng: 175.699196 },
+            { lat: 36.828611, lng: 75.790222 },
+            { lat: 37.75, lng: 45.116667 },
+            { lat: 37.759859, lng: 45.128708 },
+            { lat: 37.765015, lng: 45.133858 },
+            { lat: -37.770104, lng: 145.143299 },
+            { lat: -37.7737, lng: 145.145187 },
+            { lat: -37.774785, lng: 145.137978 },
+            { lat: -37.819616, lng: 144.968119 },
+            { lat: -38.330766, lng: 144.695692 },
+            { lat: -39.927193, lng: 175.053218 },
+            { lat: -41.330162, lng: 174.865694 },
+            { lat: -42.734358, lng: 147.439506 },
+            { lat: -42.734358, lng: 147.501315 },
+            { lat: -42.735258, lng: 147.438 },
+            { lat: -43.999792, lng: 170.463352 },
+        ];
+
+        window.initMap = initMap;
+
+        </script>
+        
+    </div>
+{% endblock %}
